@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>公交线路站点优化系统 - 项目展示</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/project_showcase.css">
+    <link rel="stylesheet" href="css/project_showcase_add.css">
+    
+    <!-- MathJax支持 -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="navbar-brand">公交线路站点优化系统</a>
+            <ul class="navbar-nav">
+                <li class="nav-item"><a href="#intro" class="nav-link">项目介绍</a></li>
+                <li class="nav-item"><a href="#features" class="nav-link">功能特点</a></li>
+                <li class="nav-item"><a href="#model" class="nav-link">模型原理</a></li>
+                <li class="nav-item"><a href="#tech" class="nav-link">技术实现</a></li>
+                <li class="nav-item"><a href="#deploy" class="nav-link">部署指南</a></li>
+                <li class="nav-item"><a href="#experiment" class="nav-link">实验应用</a></li>
+                <li class="nav-item"><a href="#analysis" class="nav-link">分析报告</a></li>
+                <li class="nav-item"><a href="#demo" class="nav-link">系统演示</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <header class="hero">
+        <div class="container">
+            <h1 class="hero-title fade-in">基于QUBO算法的公交线路站点优化系统</h1>
+            <p class="hero-subtitle fade-in">通过量子启发式优化算法提升公交网络效率</p>
+            <a href="#experiment" class="btn btn-primary fade-in">查看实验结果</a>
+        </div>
+    </header>
+
+    <!-- 项目介绍 -->
+    <section id="intro" class="section">
+        <div class="container">
+            <h2 class="section-title fade-in">项目介绍</h2>
+            <div class="intro-content fade-in">
+                <p>公交线网优化系统是一个基于QUBO算法的公交站点布局优化系统，通过网页界面提供直观的操作体验，支持上传数据、参数配置、优化计算和结果可视化等功能。系统通过分析站点服务范围、客流量、线路连接度等多维度因素，智能优化站点布局，提高线网服务效率。</p>
+                <p>该系统采用先进的量子启发式算法，将复杂的站点优化问题转化为QUBO（Quadratic Unconstrained Binary Optimization）问题，通过模拟退火算法求解，获得全局最优或近似最优解。系统可应用于城市公交线网规划、站点调整和优化评估等多种场景。</p>
+                <div class="visualization">
+                    <div class="viz-card fade-in">
+                        <img src="images\qubo_visualization.png" alt="QUBO模型可视化" class="viz-img">
+                        <div class="viz-caption">QUBO模型可视化示例</div>
+                    </div>
+                    <div class="viz-card fade-in">
+                        <img src="images\two.png" alt="目标函数迭代图" class="viz-img">
+                        <div class="viz-caption">目标函数优化迭代过程</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 功能特点 -->
+    <section id="features" class="section">
+        <div class="container">
+            <h2 class="section-title fade-in">功能特点</h2>
+            <div class="features">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon"><i class="fas fa-upload"></i></div>
+                    <h3 class="feature-title">数据上传</h3>
+                    <p class="feature-description">支持CSV和Excel格式的站点数据和区域数据，系统自动解析并验证数据格式，确保输入数据的准确性和完整性。</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon"><i class="fas fa-sliders-h"></i></div>
+                    <h3 class="feature-title">参数设置</h3>
+                    <p class="feature-description">可调整服务半径、站点权重因子、距离权重、竞争半径等多种参数，灵活配置优化策略，满足不同场景需求。</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon"><i class="fas fa-calculator"></i></div>
+                    <h3 class="feature-title">优化计算</h3>
+                    <p class="feature-description">基于QUBO和模拟退火算法优化站点布局，支持批处理优化、约束条件设置和迭代过程控制，高效求解大规模问题。</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3 class="feature-title">结果可视化</h3>
+                    <p class="feature-description">提供地图可视化、QUBO模型可视化、目标函数迭代图等多种可视化方式，直观展示优化结果和过程。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 模型原理 -->
+    <section id="model" class="section">
+        <div class="container">
+            <h2 class="section-title fade-in">模型原理</h2>
+            
+            <div class="analysis fade-in">
+                <h3 class="analysis-title">QUBO问题定义</h3>
+                <div class="analysis-content">
+                    <p>QUBO (二次无约束二元优化) 是一种优化问题形式，其中决策变量只能取值0或1。在公交站点优化中，我们用变量 \(X_j\) 表示站点 j 的状态：</p>
+                    <div class="math-block">
+                        \[ X_j = \begin{cases} 
+                        1, & \text{如果保留站点 } j \\ 
+                        0, & \text{如果移除站点 } j 
+                        \end{cases} \]
+                    </div>
+                    <p>QUBO的目标函数可以表示为矩阵形式：</p>
+                    <div class="math-block">
+                        \[ \max \sum_{i,j} X_i Q_{ij} X_j \]
+                    </div>
+                    <p>其中，\(Q_{ij}\) 是描述站点间关系的系数矩阵。</p>
+                </div>
+            </div>
+            
+            <div class="analysis fade-in">
+                <h3 class="analysis-title">站点效用函数</h3>
+                <div class="analysis-content">
+                    <p>我们首先定义站点 j 的效用函数：</p>
+                    <div class="math-block">
+                        \[ f_j = \frac{W_{jj}X_j}{1+\sum_{i\in F_j}X_i} \]
+                    </div>
+                    <p>其中：</p>
+                    <ul>
+                        <li>\(F_j\) 是站点 j 的竞争站点集合（半径 \(r_1\) 内的其他站点）</li>
+                        <li>\(W_{jj}\) 是站点 j 的综合权重</li>
+                    </ul>
+                    
+                    <p>站点的综合权重由以下公式计算：</p>
+                    <div class="math-block">
+                        \[ W_{jj} = w_j^{\alpha}\sum_{k \in A_j}a_k d_{jk}^{-\beta} \]
+                    </div>
+                    <p>其中：</p>
+                    <ul>
+                        <li>\(w_j\) 是站点 j 的固有权重（如线路数量、客流量等）</li>
+                        <li>\(\alpha\) 是权重指数，控制站点固有权重的影响程度</li>
+                        <li>\(A_j\) 是站点 j 服务范围内（半径 \(r_2\)）的需求点集合</li>
+                        <li>\(a_k\) 是需求点 k 的需求量</li>
+                        <li>\(d_{jk}\) 是站点 j 到需求点 k 的距离</li>
+                        <li>\(\beta\) 是距离衰减指数，控制距离对服务效用的影响程度</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="analysis fade-in">
+                <h3 class="analysis-title">泰勒级数近似</h3>
+                <div class="analysis-content">
+                    <p>站点效用函数 \(f_j\) 的分母中包含决策变量，使问题非线性且难以直接求解。我们使用泰勒级数近似将其转换为QUBO形式。</p>
+                    
+                    <p>设 \(x = \sum_{i\in F_j}X_i\)，在点 \(c_j\) 处进行泰勒展开：</p>
+                    <div class="math-block">
+                        \[ f_j \approx f(c_j) + f'(c_j)(x-c_j) \]
+                    </div>
+                    <p>展开后得到：</p>
+                    <div class="math-block">
+                        \[ f_j \approx \frac{1+2c_j}{(1+c_j)^2}W_{jj}X_j - \frac{W_{jj}X_j}{(1+c_j)^2}x \]
+                    </div>
+                    
+                    <p>将近似后的效用函数代入QUBO矩阵，得到：</p>
+                    <div class="math-block">
+                        \[ Q_{jj} = \frac{1+2c_j}{(1+c_j)^2}W_{jj} \]
+                    </div>
+                    <div class="math-block">
+                        \[ Q_{ij} = -\frac{W_{jj}}{(1+c_j)^2} = -\frac{Q_{jj}}{1+2c_j} \]
+                    </div>
+                    
+                    <p>其中，\(c_j\) 是近似点，为获得最佳近似效果，我们设 \(c_j = |F_j|\)，即站点 j 竞争站点的数量。</p>
+                </div>
+            </div>
+            
+            <div class="analysis fade-in">
+                <h3 class="analysis-title">模型求解与应用</h3>
+                <div class="analysis-content">
+                    <p>将问题转化为QUBO形式后，我们使用模拟退火算法求解。算法过程如下：</p>
+                    <ol>
+                        <li>构建各站点的效用函数并进行泰勒级数近似</li>
+                        <li>生成QUBO矩阵，描述站点间的关系</li>
+                        <li>添加约束条件（如保留站点数量限制）</li>
+                        <li>使用模拟退火算法求解最优站点组合</li>
+                        <li>根据批处理策略，逐步优化整个线路</li>
+                    </ol>
+                    
+                    <p>该模型的特点和优势：</p>
+                    <ul>
+                        <li>考虑站点间竞争关系，避免服务范围过度重叠</li>
+                        <li>平衡站点固有权重与需求覆盖，实现资源优化配置</li>
+                        <li>通过参数调整（\(\alpha\)、\(\beta\)、批处理大小等），灵活适应不同优化需求</li>
+                        <li>模型结果易于解释，提供明确的站点保留/移除建议</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技术实现 -->
+    <section id="tech" class="section">
+        <div class="container">
+            <h2 class="section-title fade-in">技术实现</h2>
+            
+            <div class="tech-stack fade-in">
+                <div class="tech-item">Flask</div>
+                <div class="tech-item">Bootstrap</div>
+                <div class="tech-item">Leaflet.js</div>
+                <div class="tech-item">QUBO算法</div>
+                <div class="tech-item">模拟退火</div>
+                <div class="tech-item">Pandas</div>
+                <div class="tech-item">NumPy</div>
+                <div class="tech-item">Matplotlib</div>
+                <div class="tech-item">NetworkX</div>
+            </div>
+            
+            <div class="tech-details fade-in">
+                <h3 class="analysis-title">系统架构</h3>
+                <p>系统采用前后端分离架构，后端使用Flask框架提供RESTful API，前端使用Bootstrap构建响应式界面，Leaflet.js实现地图可视化。核心算法基于QUBO和模拟退火，通过Python实现。</p>
+                
+                <h3 class="analysis-title">优化算法</h3>
+                <p>系统核心优化算法基于QUBO（Quadratic Unconstrained Binary Optimization）模型，将公交站点优化问题转化为二次无约束二元优化问题，通过模拟退火算法求解。系统支持多种约束条件，包括总站点数约束、批处理约束等，灵活适应不同优化需求。</p>
+                
+                <h3 class="analysis-title">可视化实现</h3>
+                <p>系统提供多种可视化方式：</p>
+                <ul>
+                    <li>地图可视化：使用Leaflet.js在地图上展示站点分布和优化结果</li>
+                    <li>QUBO可视化：使用NetworkX创建QUBO模型图形表示，直观展示站点间关系</li>
+                    <li>目标函数迭代图：使用Matplotlib绘制优化过程中目标函数的变化曲线</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 部署指南 -->
+    <section id="deploy" class="section">
+        <div class="container">
+            <h2 class="section-title fade-in">部署指南</h2>
+
+            <div class="deployment fade-in">
+                <h3 class="deployment-title">获取源代码</h3>
+                <p>项目已在Gitee公开发布，您可以通过以下方式获取源代码：</p>
+                <ol class="deployment-steps">
+                    <li class="deployment-step">访问Gitee仓库：<a href="https://gitee.com/AbldWP/bus-stop-optimization-system" target="_blank">https://gitee.com/AbldWP/bus-stop-optimization-system</a></li>
+                </ol>
+                <div class="code-block">git clone https://gitee.com/AbldWP/bus-stop-optimization-system.git</div>
+                <p>克隆仓库后，按照以下步骤进行部署和配置即可运行系统。</p>
+            </div>
+            
+            <div class="deployment fade-in">
+                <h3 class="deployment-title">本地开发环境</h3>
+                <ol class="deployment-steps">
+                    <li class="deployment-step">安装依赖：</li>
+                </ol>
+                <div class="code-block">pip install -r requirements.txt</div>
+                <ol class="deployment-steps" start="2">
+                    <li class="deployment-step">运行应用：</li>
+                </ol>
+                <div class="code-block">python app.py</div>
+                <ol class="deployment-steps" start="3">
+                    <li class="deployment-step">访问地址：http://localhost:5000</li>
+                </ol>
+            </div>
+            
+            <div class="deployment fade-in">
+                <h3 class="deployment-title">使用Docker部署</h3>
+                <ol class="deployment-steps">
+                    <li class="deployment-step">构建Docker镜像：</li>
+                </ol>
+                <div class="code-block">docker build -t bus-stop-optimization .</div>
+                <ol class="deployment-steps" start="2">
+                    <li class="deployment-step">运行容器：</li>
+                </ol>
+                <div class="code-block">docker run -p 5000:5000 bus-stop-optimization</div>
+            </div>
+          
+           
+
+        </div>
+    </section>
+
+    <!-- 实验结果 -->
+    <section id="experiment" class="section">
+        <div class="container">
+            <h2 class="section-title fade-in">实验应用</h2>
+            <p class="fade-in">以下是针对重庆市304公交线路的优化实验结果，研究对重庆市304公交线路进行了优化分析，通过调整不同参数组合，探究了批处理大小(batch)、每批次保留站点数(P)以及权重指数(α)对优化结果的影响。实验结果表明，不同参数配置下系统能够识别出线路中冗余性较高的站点，为公交线路优化提供了科学依据。</p>
+            
+            <!-- 批处理参数实验 -->
+            <div class="experiment-results fade-in">
+                <h3 class="analysis-title">批处理大小(batch)与保留站点数(p)对优化结果的影响</h3>
+                <p>批处理大小和保留站点数是QUBO算法中的关键参数，它们共同决定了每批次中站点的筛选强度。实验结果显示，在所有实验组合中，"下浩"站点始终被选择移除，这表明该站点在不同批次内均被算法判定为低效站点。</p>
+                <table class="result-table">
+                    <thead>
+                        <tr>
+                            <th class="sortable">实验序号</th>
+                            <th class="sortable">批处理大小(batch)</th>
+                            <th class="sortable">每批次保留站点数(p)</th>
+                            <th>移除站点</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>南坪站、海棠晓月、上新街、<span class="stable-removal">下浩</span>、觉林寺、东海长洲、腾龙大道</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>南坪站、海棠溪新街、<span class="stable-removal">下浩</span>、涂山路、南岸大石坝</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>南坪站、海棠溪新街、<span class="stable-removal">下浩</span>、东海长洲</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>6</td>
+                            <td>5</td>
+                            <td>海棠溪、<span class="stable-removal">下浩</span>、南岸大石坝</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>7</td>
+                            <td>6</td>
+                            <td>海棠晓月、<span class="stable-removal">下浩</span>、东海长洲</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- 权重参数实验 -->
+            <div class="experiment-results fade-in">
+                <h3 class="analysis-title">权重指数(α)对优化结果的影响</h3>
+                <p>权重指数α控制站点固有重要性在优化过程中的影响程度。实验结果表明：当α=1时，系统主要基于地理分布和服务覆盖进行优化；当α增加到1.5及以上时，优化结果出现明显变化，系统更倾向于保留权重高的站点；当α≥2.5时，优化结果趋于稳定，移除站点集中在"南坪东路"、"海棠溪"、"下浩"和"东海长洲"。值得注意的是，无论α值如何变化，"下浩"站点始终被识别为应移除站点，这强烈暗示该站点在当前线网中确实存在冗余性。</p>
+                <table class="result-table">
+                    <thead>
+                        <tr>
+                            <th class="sortable">实验序号</th>
+                            <th class="sortable">α值（权重指数）</th>
+                            <th class="sortable">β值（距离权重）</th>
+                            <th>移除站点</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>南坪站、海棠溪新街、<span class="stable-removal">下浩</span>、东海长洲</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>1.5</td>
+                            <td>2</td>
+                            <td>南坪东路、海棠溪、<span class="stable-removal">下浩</span>、东海长洲</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>福利社·小米熊儿童医院、海棠溪新街、<span class="stable-removal">下浩</span>、东海长洲</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>2.5</td>
+                            <td>2</td>
+                            <td>南坪东路、海棠溪、<span class="stable-removal">下浩</span>、东海长洲</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>南坪东路、海棠溪、<span class="stable-removal">下浩</span>、东海长洲</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- 实验分析 -->
+    <section id="analysis" class="section">
+        <div class="container">
+            <h2 class="section-title fade-in">分析报告</h2>
+            
+            <div class="analysis fade-in">
+                <h3 class="analysis-title">"下浩"站点移除的合理性分析</h3>
+                <div class="analysis-content">
+                    <p>"下浩"站点在所有实验组合中均被识别为应移除站点，表明其冗余性不受参数变化影响。以下分析其合理性：</p>
+                    <ol>
+                        <li><strong>站点固有特性</strong>：从原始数据可见，"下浩"站点的权重值仅为0.006448484，在所有站点中属于极低水平，表明其客流量小、换乘功能弱。</li>
+                        
+                        <li><strong>地理位置因素</strong>：该站点位于"觉林寺"和"一天门"站点之间，三站距离较近，形成了服务范围的高度重叠。系统算法准确识别出这种冗余布局。</li>
+                        
+                        <li><strong>移除效益分析</strong>：
+                            <ul>
+                                <li>运行效率提升：移除"下浩"站点可减少公交车辆不必要的停靠，提高线路运行效率</li>
+                                <li>乘客影响有限：对乘客出行影响小，因为附近站点可提供替代服务</li>
+                                <li>资源优化配置：在保证服务覆盖的前提下优化资源配置</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <p>因此，移除"下浩"站点是合理的优化决策，这不仅能提高304线路的运行效率，还能在保证服务覆盖的前提下优化资源配置。</p>
+                </div>
+            </div>
+
+            <div class="key-finding fade-in">
+                <h4 class="key-finding-title">关键发现</h4>
+                <p>基于QUBO算法的公交线路优化实验表明，通过合理设置批处理大小、保留站点数和权重指数等参数，可以科学识别线路中的冗余站点。实验结果高度一致地建议移除<span class="stable-removal">下浩</span>站点，同时根据不同优化强度，可考虑移除"海棠溪"、"东海长洲"等站点。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 系统演示 -->
+    <section id="demo" class="section">
+        <div class="container">
+            <h2 class="section-title fade-in">系统操作演示</h2>
+            <p class="fade-in">以下是公交线网优化系统的操作演示视频，展示了系统的主要功能和使用流程，包括数据上传、参数设置、优化计算和结果可视化等步骤。</p>
+            
+            <div class="video-container fade-in">
+                <video width="100%" controls>
+                    <source src="videos/公交线网优化系统的展示视频.mp4" type="video/mp4">
+                    您的浏览器不支持视频播放，请使用现代浏览器观看。
+                </video>
+                <p class="video-note">如视频无法播放，请<a href="static/videos/公交线网优化系统的展示视频.mp4" download>点击下载</a>后观看，或访问<a href="https://gitee.com/AbldWP/bus-stop-optimization-system" target="_blank">Gitee仓库</a>获取更多演示资料。</p>
+            </div>
+            
+
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">© 2023 公交线网优化系统 - 基于QUBO算法的公交站点布局优化</p>
+        </div>
+    </footer>
+
+    <script src="js/project_showcase.js"></script>
+</body>
+</html> 

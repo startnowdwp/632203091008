@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>304公交线路运营分析系统</title>
+    <style>
+        /* 样式表包含选项卡布局代码 */
+        .tab { overflow: hidden; border: 1px solid #ccc; background: #f1f1f1 }
+        .tab button { background-color: inherit; float: left; border: none; outline: none; 
+            cursor: pointer; padding: 14px 16px; transition: 0.3s; font-size: 17px }
+        .tab button:hover { background-color: #ddd }
+        .tab button.active { background-color: #3498db; color: white }
+        .tabcontent { display: none; padding: 6px 12px; border: 1px solid #ccc; border-top: none }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0 }
+        th, td { border: 1px solid #ddd; padding: 12px }
+        th { background-color: #3498db; color: white }
+    </style>
+</head>
+<body>
+    <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'Tab1')">满载率分析</button>
+        <button class="tablinks" onclick="openTab(event, 'Tab2')">断面流量</button>
+        <button class="tablinks" onclick="openTab(event, 'Tab3')">上下车对比</button>
+        <button class="tablinks" onclick="openTab(event, 'Tab4')">速度分析</button>
+        <button class="tablinks" onclick="openTab(event, 'Tab5')">运行时刻表</button>
+        <button class="tablinks" onclick="openTab(event, 'Tab6')">OD换乘分析</button>
+    </div>
+
+    <!-- 标签页内容 -->
+    <div id="Tab1" class="tabcontent">
+        <h3>满载率特征分析</h3>
+        <p>从满载率折线图可以看出，304线路存在明显的<strong>"高峰不饱和、平峰低效"</strong>特征。具体表现为：304公交线路在平峰和高峰时段的客流承载能力均未达到饱和状态。高峰时段上行方向的最大满载率出现在"上新街[轨道站]（一天门）"至"觉林寺"区间（73.68%），但整体仍低于50%，表明线路运力存在过剩。值得注意的是，平峰时段上行方向在"南坪（东路）"至"上新街[轨道站]（一天门）"区段的满载率甚至高于高峰时段，尤其在"龙门浩"至"上新街[轨道站]（一天门）"区间出现陡降，说明平峰客流主要集中于轨道接驳需求，乘客多在轨道站点集中下车。下行方向的高峰满载率峰值出现在"腾龙大道"站（65.79%），但后续站点快速衰减，呈现"单峰"分布特征，与上行方向的"多峰"分布形成对比。</p>
+    
+        <!-- 将两个表格并排放置 -->
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; margin-top: 20px;">
+            <!-- 上行方向表格 -->
+            <div style="width: 49%; overflow-x: auto;">
+                <h4>上行方向满载率分布</h4>
+                <table style="width: 100%;">
+                    <tr><th>站点名称</th><th>平峰满载率</th><th>晚高峰满载率</th><th>波动幅度</th></tr>
+                    <tr><td>南坪（东路）</td><td>-</td><td>-</td><td>-</td></tr>
+                    <tr><td>万寿站</td><td>58%</td><td>29%</td><td style="color:#e74c3c">↓29%</td></tr>
+                    <tr><td>二小区</td><td>63%</td><td>37%</td><td style="color:#e74c3c">↓26%</td></tr>
+                    <tr><td>南坪东路女子医院</td><td>53%</td><td>21%</td><td style="color:#e74c3c">↓32%</td></tr>
+                    <tr><td>福利社（小米熊儿童医院）</td><td>61%</td><td>37%</td><td style="color:#e74c3c">↓24%</td></tr>
+                    <tr><td>海棠晓月</td><td>53%</td><td>39%</td><td style="color:#e74c3c">↓14%</td></tr>
+                    <tr><td>海棠溪</td><td>53%</td><td>34%</td><td style="color:#e74c3c">↓19%</td></tr>
+                    <tr><td>海棠溪新街</td><td>58%</td><td>45%</td><td style="color:#e74c3c">↓13%</td></tr>
+                    <tr><td>上新街</td><td>53%</td><td>47%</td><td style="color:#e74c3c">↓6%</td></tr>
+                    <tr><td>龙门浩</td><td>47%</td><td>53%</td><td style="color:#2ecc71">↑6%</td></tr>
+                    <tr><td>上新街[轨道站]（一天门）</td><td>47%</td><td>55%</td><td style="color:#2ecc71">↑8%</td></tr>
+                    <tr><td>下浩</td><td>24%</td><td>74%</td><td style="color:#2ecc71">↑50%</td></tr>
+                    <tr><td>觉林寺</td><td>24%</td><td>74%</td><td style="color:#2ecc71">↑50%</td></tr>
+                    <tr><td>涂山路中段（莲花公墓）</td><td>29%</td><td>63%</td><td style="color:#2ecc71">↑34%</td></tr>
+                    <tr><td>市五医院</td><td>29%</td><td>58%</td><td style="color:#2ecc71">↑29%</td></tr>
+                    <tr><td>涂山路</td><td>29%</td><td>58%</td><td style="color:#2ecc71">↑29%</td></tr>
+                    <tr><td>涂山站[东海长洲]</td><td>29%</td><td>61%</td><td style="color:#2ecc71">↑32%</td></tr>
+                    <tr><td>南岸大石坝</td><td>21%</td><td>50%</td><td style="color:#2ecc71">↑29%</td></tr>
+                    <tr><td>十一中</td><td>24%</td><td>26%</td><td style="color:#2ecc71">↑2%</td></tr>
+                    <tr><td>腾龙大道</td><td>21%</td><td>24%</td><td style="color:#2ecc71">↑3%</td></tr>
+                    <tr><td>开泰路首末站</td><td>18%</td><td>18%</td><td>-</td></tr>
+                </table>
+            </div>
+            
+            <!-- 下行方向表格 -->
+            <div style="width: 49%; overflow-x: auto;">
+                <h4>下行方向满载率分布</h4>
+                <table style="width: 100%;">
+                    <tr><th>站点名称</th><th>平峰满载率</th><th>晚高峰满载率</th><th>波动幅度</th></tr>
+                    <tr><td>开泰路首末站</td><td>-</td><td>-</td><td>-</td></tr>
+                    <tr><td>福民路东段</td><td>8%</td><td>5%</td><td style="color:#e74c3c">↓3%</td></tr>
+                    <tr><td>国际社区</td><td>13%</td><td>32%</td><td style="color:#2ecc71">↑19%</td></tr>
+                    <tr><td>腾龙大道</td><td>37%</td><td>66%</td><td style="color:#2ecc71">↑29%</td></tr>
+                    <tr><td>弹子石群慧路</td><td>37%</td><td>66%</td><td style="color:#2ecc71">↑29%</td></tr>
+                    <tr><td>弹子石</td><td>32%</td><td>58%</td><td style="color:#2ecc71">↑26%</td></tr>
+                    <tr><td>十一中</td><td>34%</td><td>50%</td><td style="color:#2ecc71">↑16%</td></tr>
+                    <tr><td>南岸大石坝</td><td>34%</td><td>45%</td><td style="color:#2ecc71">↑11%</td></tr>
+                    <tr><td>涂山站[东海长洲]</td><td>29%</td><td>42%</td><td style="color:#2ecc71">↑13%</td></tr>
+                    <tr><td>涂山路</td><td>29%</td><td>42%</td><td style="color:#2ecc71">↑13%</td></tr>
+                    <tr><td>市五医院</td><td>24%</td><td>34%</td><td style="color:#2ecc71">↑10%</td></tr>
+                    <tr><td>涂山路中段（莲花公墓）</td><td>21%</td><td>29%</td><td style="color:#2ecc71">↑8%</td></tr>
+                    <tr><td>觉林寺</td><td>18%</td><td>29%</td><td style="color:#2ecc71">↑11%</td></tr>
+                    <tr><td>下浩</td><td>18%</td><td>21%</td><td style="color:#2ecc71">↑3%</td></tr>
+                    <tr><td>上新街[轨道站]（一天门）</td><td>18%</td><td>21%</td><td style="color:#2ecc71">↑3%</td></tr>
+                    <tr><td>龙门浩</td><td>16%</td><td>37%</td><td style="color:#2ecc71">↑21%</td></tr>
+                    <tr><td>上新街</td><td>42%</td><td>32%</td><td style="color:#e74c3c">↓10%</td></tr>
+                    <tr><td>海棠溪新街</td><td>47%</td><td>29%</td><td style="color:#e74c3c">↓18%</td></tr>
+                    <tr><td>海棠溪</td><td>47%</td><td>42%</td><td style="color:#e74c3c">↓5%</td></tr>
+                    <tr><td>海棠晓月</td><td>45%</td><td>32%</td><td style="color:#e74c3c">↓13%</td></tr>
+                    <tr><td>福利社（小米熊儿童医院）</td><td>39%</td><td>24%</td><td style="color:#e74c3c">↓15%</td></tr>
+                    <tr><td>南坪</td><td>42%</td><td>24%</td><td style="color:#e74c3c">↓18%</td></tr>
+                </table>
+            </div>
+        </div>
+    
+        <img src="images/满载率曲线图.png" alt="满载率曲线图" style="width:90%; margin:20px auto; display:block">
+        <p style="text-align: center; font-style: italic; color: #666; margin-top: 5px; font-size: 0.9em;">备注：为了上下同站点直观对比，对未经过的站点或终点站补零处理</p>
+    </div>
+
+    <div id="Tab2" class="tabcontent">
+        <h3>断面流量峰值分布特征</h3>
+        <p>断面客流量的时空对比揭示出强烈的方向不均衡性。高峰时段上行方向在"下浩"-"觉林寺"区间达到最大断面流量（28人），而下行方向在"腾龙大道"-"弹子石群慧路站"出现峰值（25人）。平峰时段的上行断面流量整体高于下行，例如"南坪（东路）"站上行断面流量为22人，而下行首站"开泰路首末站"仅3人。这种差异可能与早高峰通勤流向有关——上行方向（南坪往开泰路）承载更多居住区至就业中心的通勤需求，而下行方向在平峰时段以分散的短途客流为主。此外，下行方向在"国际社区"站出现15人的高峰上车量，但后续"腾龙大道"站无一人上车，断面流量却保持25人，说明该区域存在"只下不上"的特殊客流模式，可能与周边封闭式园区有关。</p>
+
+        <!-- 将两个表格并排放置 -->
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; margin-top: 20px;">
+            <!-- 上行方向表格 -->
+            <div style="width: 49%; overflow-x: auto;">
+                <h4>上行方向断面流量（人次/小时）</h4>
+                <table style="width: 100%;">
+                    <tr><th>站点名称</th><th>平峰流量</th><th>晚高峰流量</th><th>波动幅度</th></tr>
+                    <tr><td>南坪（东路）</td><td>-</td><td>-</td><td>-</td></tr>
+                    <tr><td>万寿站</td><td>22</td><td>11</td><td style="color:#e74c3c">↓11</td></tr>
+                    <tr><td>二小区</td><td>24</td><td>14</td><td style="color:#e74c3c">↓10</td></tr>
+                    <tr><td>南坪东路女子医院</td><td>20</td><td>8</td><td style="color:#e74c3c">↓12</td></tr>
+                    <tr><td>福利社（小米熊儿童医院）</td><td>23</td><td>14</td><td style="color:#e74c3c">↓9</td></tr>
+                    <tr><td>海棠晓月</td><td>20</td><td>15</td><td style="color:#e74c3c">↓5</td></tr>
+                    <tr><td>海棠溪</td><td>20</td><td>13</td><td style="color:#e74c3c">↓7</td></tr>
+                    <tr><td>海棠溪新街</td><td>22</td><td>17</td><td style="color:#e74c3c">↓5</td></tr>
+                    <tr><td>上新街</td><td>20</td><td>18</td><td style="color:#e74c3c">↓2</td></tr>
+                    <tr><td>龙门浩</td><td>18</td><td>20</td><td style="color:#2ecc71">↑2</td></tr>
+                    <tr><td>上新街[轨道站]（一天门）</td><td>18</td><td>21</td><td style="color:#2ecc71">↑3</td></tr>
+                    <tr><td>下浩</td><td>9</td><td>28</td><td style="color:#2ecc71">↑19</td></tr>
+                    <tr><td>觉林寺</td><td>9</td><td>28</td><td style="color:#2ecc71">↑19</td></tr>
+                    <tr><td>涂山路中段（莲花公墓）</td><td>11</td><td>24</td><td style="color:#2ecc71">↑13</td></tr>
+                    <tr><td>市五医院</td><td>11</td><td>22</td><td style="color:#2ecc71">↑11</td></tr>
+                    <tr><td>涂山路</td><td>11</td><td>22</td><td style="color:#2ecc71">↑11</td></tr>
+                    <tr><td>涂山站[东海长洲]</td><td>11</td><td>23</td><td style="color:#2ecc71">↑12</td></tr>
+                    <tr><td>南岸大石坝</td><td>8</td><td>19</td><td style="color:#2ecc71">↑11</td></tr>
+                    <tr><td>十一中</td><td>9</td><td>10</td><td style="color:#2ecc71">↑1</td></tr>
+                    <tr><td>腾龙大道</td><td>8</td><td>9</td><td style="color:#2ecc71">↑1</td></tr>
+                    <tr><td>开泰路首末站</td><td>7</td><td>7</td><td>-</td></tr>
+                </table>
+            </div>
+            
+            <!-- 下行方向表格 -->
+            <div style="width: 49%; overflow-x: auto;">
+                <h4>下行方向断面流量（人次/小时）</h4>
+                <table style="width: 100%;">
+                    <tr><th>站点名称</th><th>平峰流量</th><th>晚高峰流量</th><th>波动幅度</th></tr>
+                    <tr><td>开泰路首末站</td><td>-</td><td>-</td><td>-</td></tr>
+                    <tr><td>福民路东段</td><td>3</td><td>2</td><td style="color:#e74c3c">↓1</td></tr>
+                    <tr><td>国际社区</td><td>5</td><td>12</td><td style="color:#2ecc71">↑7</td></tr>
+                    <tr><td>腾龙大道</td><td>14</td><td>25</td><td style="color:#2ecc71">↑11</td></tr>
+                    <tr><td>弹子石群慧路</td><td>14</td><td>25</td><td style="color:#2ecc71">↑11</td></tr>
+                    <tr><td>弹子石</td><td>12</td><td>22</td><td style="color:#2ecc71">↑10</td></tr>
+                    <tr><td>十一中</td><td>13</td><td>19</td><td style="color:#2ecc71">↑6</td></tr>
+                    <tr><td>南岸大石坝</td><td>13</td><td>17</td><td style="color:#2ecc71">↑4</td></tr>
+                    <tr><td>涂山站[东海长洲]</td><td>11</td><td>16</td><td style="color:#2ecc71">↑5</td></tr>
+                    <tr><td>涂山路</td><td>11</td><td>16</td><td style="color:#2ecc71">↑5</td></tr>
+                    <tr><td>市五医院</td><td>9</td><td>13</td><td style="color:#2ecc71">↑4</td></tr>
+                    <tr><td>涂山路中段（莲花公墓）</td><td>8</td><td>11</td><td style="color:#2ecc71">↑3</td></tr>
+                    <tr><td>觉林寺</td><td>7</td><td>11</td><td style="color:#2ecc71">↑4</td></tr>
+                    <tr><td>下浩</td><td>7</td><td>8</td><td style="color:#2ecc71">↑1</td></tr>
+                    <tr><td>上新街[轨道站]（一天门）</td><td>7</td><td>8</td><td style="color:#2ecc71">↑1</td></tr>
+                    <tr><td>龙门浩</td><td>6</td><td>14</td><td style="color:#2ecc71">↑8</td></tr>
+                    <tr><td>上新街</td><td>16</td><td>12</td><td style="color:#e74c3c">↓4</td></tr>
+                    <tr><td>海棠溪新街</td><td>18</td><td>11</td><td style="color:#e74c3c">↓7</td></tr>
+                    <tr><td>海棠溪</td><td>18</td><td>16</td><td style="color:#e74c3c">↓2</td></tr>
+                    <tr><td>海棠晓月</td><td>17</td><td>12</td><td style="color:#e74c3c">↓5</td></tr>
+                    <tr><td>福利社（小米熊儿童医院）</td><td>15</td><td>9</td><td style="color:#e74c3c">↓6</td></tr>
+                    <tr><td>南坪</td><td>16</td><td>9</td><td style="color:#e74c3c">↓7</td></tr>
+                </table>
+            </div>
+        </div>
+        
+        <img src="images/断面客流对比图.png" alt="断面客流对比图" style="width:90%; margin:20px auto; display:block">
+        <p style="text-align: center; font-style: italic; color: #666; margin-top: 5px; font-size: 0.9em;">备注：为了上下同站点直观对比，对未经过的站点或终点站补零处理</p>
+    </div>
+        </table>
+    </div>
+
+    <div id="Tab3" class="tabcontent">
+        <h3>双向上下车潮汐特征</h3>
+        <p>上下车人数分布显示高峰时段的客流集散具有明显的“潮汐性”。上行方向“南坪（东路）”站上车量达11人，而末端“开泰路首末站”下车量7人；下行方向则相反，“开泰路首末站”上车2人，“南坪”站下车9人。平峰时段上行“南坪（东路）”站出现异常高的上车量（22人），后续站点上下车量骤减，结合满载率曲线可推断，这些乘客多集中于“上新街[轨道站]（一天门）”下车（下车9人），进一步验证了轨道接驳的主导作用。</p>
+        <h4>上下行不同时段上下车人数对比图</h4>
+        <img src="images/上下行不同时段上下车人数对比图.png" alt="上下行不同时段上下车人数对比图" style="width:90%; margin:20px auto; display:block">
+        <p style="text-align: center; font-style: italic; color: #666; margin-top: 5px; font-size: 0.9em;">备注：为了上下同站点直观对比，对未经过的站点或终点站补零处理</p>
+    </div>
+    </div>
+
+    <div id="Tab4" class="tabcontent">
+        <h3>典型区间速度波动分析</h3>
+        <p>由图可以看出，区间速度呈现“平峰快于高峰”的典型特征。高峰时段上行方向在“海棠溪新街”-“上新街”站出现最低速度（5.37km/h），在“上新街”站停站时间长达84秒，与轨道换乘引发的人流交织直接相关，凸显了高峰时段轨道换乘压力的显著影响；平峰时段同区段速度提升至18.18km/h。下行方向在高峰时段的“觉林寺”站出现异常高速（36km/h），可能因该站无上下客且站点间距较大。值得注意的是，“涂山路中段-市五医院”区间平峰速度达50.31km/h，但高峰仅29.33km/h，结合POI数据发现该路段平峰时段商业活动稀少，导致通行条件改善。</p>
+        <h4>上下行不同时段行车速度对比图</h4>
+        <img src="images/上下行不同时段行车速度对比图.png" alt="上下行不同时段行车速度对比图" style="width:90%; margin:20px auto; display:block">
+    </div>
+    </div>
+
+    <div id="Tab5" class="tabcontent">
+        <h3>运行图特征分析</h3>
+        <p>从运行图对比来看，两次调查的上下行运行情况基本呈对称的“钟形曲线”，这反映出304公交线路由“南坪（东站）”-“开泰路首末站”经历了交通条件“拥挤”-“畅通”的变化，凸显了南坪商圈对周围居民的吸引。平峰与高峰时段的下行方向走向差异不明显，而上行方向上高峰时段明显较平峰时段更加平缓，站点停靠时长更长，站间行驶速度较为缓慢。说明304线路在高峰时段上行方向上承载更多通勤客流的需求，应该考虑在高峰时段该方向上增加调度车辆。同时，通常公交双向客流具有明显的“潮汐”现象，由此也可以推测304线路下行方向在早高峰的通勤客流应较为拥挤。在高峰时段的上行方向上接近上新街轨道站时出现出现明显的速度下降与短暂水平延伸，这反映了轨道到站客流瞬时冲击导致的车辆滞留。</p>
+       
+        <h4>公交运行图（4.11平峰数据）</h4>       
+        <img src="images/4.11运行图.png" alt="公交运行图（4.11平峰数据）" style="width:90%; margin:20px auto; display:block">
+        <h4>公交运行图（3.31晚高峰数据）</h4>
+        <img src="images/3.31运行图.png" alt="公交运行图（3.31晚高峰数据）" style="width:90%; margin:20px auto; display:block">
+    </div>
+    </div>
+
+    <div id="Tab6" class="tabcontent">
+        <h3>轨道接驳功能</h3>
+        <p>由于时间紧凑，小组仅在4月11日调查任务中进行了乘客采访，并且只收集了7位乘客的数据，如下，不具有统计意义，但是我们在调查对象的选取上覆盖了青少年、中年、老年等多个年龄段的群体，旨在透过一些典型个体映射304公交线路的主要承担功能。从调查表中可以看到：老年卡包括两例、学生卡包括1例，且老年乘客到达地含“市五医院”，推测该线路承担就医、上学等刚性需求，需重点保障无障碍设施（如调查中68岁乘客从“南坪东路女子医院站”下车，可能对应医院站点台阶过高问题）。上午10:17-10:55时段出现3例“上班”目的出行，但此时段属平峰期，推测部分企业存在弹性工作制，因此可以延长高峰时段定义，避免出现“假性平峰”导致的运力错配。2例到达地为“上新街站（轨道站）”，接驳方式均为步行，结合出发地含“福利社”（距轨道站1.2km），推测该区域存在“轨道+公交”接驳盲区，可试点接驳微循环巴士。</p>
+        <h4>公交乘客O-D及换乘情况调查统计</h4>
+        <img src="images/OD统计.jpg" alt="公交乘客O-D及换乘情况调查统计" style="width:90%; margin:20px auto; display:block">
+    </div>
+    </div>
+
+
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+        // 默认打开第一个标签页
+        document.getElementsByClassName('tablinks')[0].click();
+    </script>
+</body>
+</html>

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>公交线网优化系统使用说明书</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: "Microsoft YaHei", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            padding: 30px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 900px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #0d6efd;
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #0d6efd;
+        }
+        h2 {
+            color: #0d6efd;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        h3 {
+            color: #198754;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        h4 {
+            color: #6c757d;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .alert-info {
+            background-color: #e8f4f8;
+            border-color: #b8daff;
+        }
+        .table-container {
+            overflow-x: auto;
+        }
+        .note {
+            font-size: 0.9rem;
+            color: #6c757d;
+            font-style: italic;
+        }
+        .bg-light-blue {
+            background-color: #f0f7ff;
+        }
+        .card-header {
+            font-weight: bold;
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: none;
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 20px;
+            line-height: 50px;
+            cursor: pointer;
+            z-index: 100;
+        }
+        .back-to-top:hover {
+            background-color: #0b5ed7;
+        }
+        .step-image {
+            max-width: 100%;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            margin-top: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>公交线网优化系统使用说明书</h1>
+        
+        <!-- 目录 -->
+        <div class="card mb-4">
+            <div class="card-header bg-light-blue">目录</div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <li><a href="#intro">1. 系统简介</a></li>
+                    <li><a href="#interface">2. 系统界面及功能</a>
+                        <ul>
+                            <li><a href="#data-upload">2.1 数据上传</a></li>
+                            <li><a href="#params">2.2 参数设置</a></li>
+                            <li><a href="#visualization">2.3 可视化结果</a></li>
+                            <li><a href="#results">2.4 优化结果</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#workflow">3. 操作流程</a></li>
+                    <li><a href="#tuning">4. 参数调优建议</a></li>
+                    <li><a href="#notes">5. 注意事项</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 系统简介 -->
+        <div id="intro" class="section">
+            <h2>1. 系统简介</h2>
+            <p>公交线网优化系统是一个基于QUBO（二次无约束二元优化）算法的工具，用于优化公交站点布局，实现服务覆盖最大化和资源利用最优化。系统通过网页界面提供直观的操作体验，支持上传数据、参数配置、优化计算和结果可视化等功能。</p>
+        </div>
+        
+        <!-- 系统界面及功能 -->
+        <div id="interface" class="section">
+            <h2>2. 系统界面及功能</h2>
+            <p>系统界面分为三个主要部分：数据上传区、参数设置区和结果可视化区。</p>
+            
+            <!-- 数据上传 -->
+            <div id="data-upload" class="subsection">
+                <h3>2.1 数据上传</h3>
+                
+                <div class="card mb-3">
+                    <div class="card-header">站点数据</div>
+                    <div class="card-body">
+                        <ul>
+                            <li><strong>上传格式</strong>：CSV或Excel文件</li>
+                            <li><strong>必需字段</strong>：
+                                <ul>
+                                    <li>StopID：站点唯一标识</li>
+                                    <li>Lat：纬度坐标</li>
+                                    <li>Long：经度坐标</li>
+                                    <li>Routes：途经路线</li>
+                                    <li>weights：站点权重</li>
+                                </ul>
+                            </li>
+                            <li><strong>上传按钮</strong>：点击后将站点数据发送至服务器进行处理</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card mb-3">
+                    <div class="card-header">区域数据</div>
+                    <div class="card-body">
+                        <ul>
+                            <li><strong>上传格式</strong>：CSV或Excel文件</li>
+                            <li><strong>必需字段</strong>：
+                                <ul>
+                                    <li>AreaID：区域唯一标识</li>
+                                    <li>AreaLat：区域中心纬度</li>
+                                    <li>AreaLong：区域中心经度</li>
+                                    <li>AreaDemand：区域需求量</li>
+                                </ul>
+                            </li>
+                            <li><strong>上传按钮</strong>：点击后将区域数据发送至服务器进行处理</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 参数设置 -->
+            <div id="params" class="subsection">
+                <h3>2.2 参数设置</h3>
+                
+                <h4>基本参数</h4>
+                <div class="table-container">
+                    <table class="table table-striped">
+                        <thead class="table-light">
+                            <tr>
+                                <th>参数名称</th>
+                                <th>说明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>服务半径</td>
+                                <td>每个公交站点能够服务的覆盖范围（单位：公里）</td>
+                            </tr>
+                            <tr>
+                                <td>竞争半径</td>
+                                <td>站点间相互竞争范围（默认为服务半径的60%）</td>
+                            </tr>
+                            <tr>
+                                <td>批处理大小(batch)</td>
+                                <td>站点将被分成的批次大小，影响求解效率</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h4>高级参数</h4>
+                <div class="table-container">
+                    <table class="table table-striped">
+                        <thead class="table-light">
+                            <tr>
+                                <th>参数名称</th>
+                                <th>说明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Alpha值</td>
+                                <td>控制站点权重的影响程度，值越大，权重因素越重要</td>
+                            </tr>
+                            <tr>
+                                <td>Beta值</td>
+                                <td>控制距离的影响程度，值越大，距离因素越重要</td>
+                            </tr>
+                            <tr>
+                                <td>惩罚尺度(Fs)</td>
+                                <td>QUBO约束惩罚系数，影响约束的强制程度</td>
+                            </tr>
+                            <tr>
+                                <td>每批次保留站点数(p)</td>
+                                <td>每个批次中要保留的站点数量（必须小于batch值）</td>
+                            </tr>
+                            <tr>
+                                <td>批次约束乘数</td>
+                                <td>控制批次约束的惩罚强度，建议范围3.0-10.0</td>
+                            </tr>
+                            <tr>
+                                <td>模拟退火迭代次数</td>
+                                <td>影响优化质量和计算时间，更多迭代可能得到更好结果</td>
+                            </tr>
+                            <tr>
+                                <td>使用p约束</td>
+                                <td>控制是否在QUBO目标函数中使用站点数量约束</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="alert alert-info mt-3">
+                    <strong>提示：</strong> p值必须小于批处理大小(batch)，系统会自动验证并提示。
+                </div>
+            </div>
+            
+            <!-- 可视化结果 -->
+            <div id="visualization" class="subsection">
+                <h3>2.3 可视化结果</h3>
+                
+                <h4>地图可视化</h4>
+                <ul>
+                    <li><strong>活跃站点</strong>：绿色标记，表示优化后保留的站点</li>
+                    <li><strong>移除站点</strong>：红色标记，表示优化后移除的站点</li>
+                    <li><strong>服务区域</strong>：蓝色圆形，表示需求区域</li>
+                    <li><strong>筛选控件</strong>：可选择显示全部站点、仅活跃站点或仅移除站点</li>
+                </ul>
+                
+                <h4>QUBO可视化</h4>
+                <ul>
+                    <li><strong>无约束QUBO</strong>：展示不含站点数量限制的基础优化模型</li>
+                    <li><strong>全局约束QUBO</strong>：展示添加全局站点数量约束的模型</li>
+                    <li><strong>稀疏约束QUBO</strong>：展示采用批处理方式添加约束的模型</li>
+                </ul>
+                
+                <h4>目标函数迭代</h4>
+                <p>展示优化过程中目标函数值的变化曲线，帮助理解算法收敛情况</p>
+                
+                <h4>迭代日志</h4>
+                <p>记录优化过程的详细日志信息，支持下载完整日志文件</p>
+            </div>
+            
+            <!-- 优化结果 -->
+            <div id="results" class="subsection">
+                <h3>2.4 优化结果</h3>
+                <ul>
+                    <li><strong>总站点数</strong>：数据集中的站点总数</li>
+                    <li><strong>保留站点</strong>：优化后保留的站点数量</li>
+                    <li><strong>移除站点</strong>：优化后删除的站点数量</li>
+                    <li><strong>站点ID列表</strong>：分别展示保留和移除的站点ID及得分</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 操作流程 -->
+        <div id="workflow" class="section">
+            <h2>3. 操作流程</h2>
+            
+            <div class="card mb-3">
+                <div class="card-header">步骤1：上传数据</div>
+                <div class="card-body">
+                    <ul>
+                        <li>上传站点数据文件</li>
+                        <li>上传区域数据文件</li>
+                        <li>系统会在地图上显示上传的站点和区域</li>
+                    </ul>
+                    <img src="images/map_visualization.png" alt="地图可视化界面示例" class="step-image">
+                </div>
+            </div>
+            
+            <div class="card mb-3">
+                <div class="card-header">步骤2：设置参数</div>
+                <div class="card-body">
+                    <ul>
+                        <li>设置服务半径和其他基本参数</li>
+                        <li>根据需要调整高级参数</li>
+                        <li>注意：p值必须小于批处理大小</li>
+                    </ul>
+                    <img src="images/parameter_settings.png" alt="参数设置界面示例" class="step-image">
+                </div>
+            </div>
+            
+            <div class="card mb-3">
+                <div class="card-header">步骤3：开始优化</div>
+                <div class="card-body">
+                    <ul>
+                        <li>点击"开始优化"按钮</li>
+                        <li>系统显示优化进度</li>
+                        <li>等待优化完成</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card mb-3">
+                <div class="card-header">步骤4：查看结果</div>
+                <div class="card-body">
+                    <ul>
+                        <li>在地图上查看优化后的站点布局</li>
+                        <li>使用过滤器查看不同类型的站点</li>
+                        <li>查看QUBO模型可视化和目标函数迭代图</li>
+                        <li>浏览迭代日志了解优化过程</li>
+                    </ul>
+                    <div class="text-center">
+                        <img src="images/one.png" alt="优化结果地图示例" class="step-image mb-3">
+                        <img src="images/optimization_results.png" alt="优化结果输出表示例" class="step-image mb-3">
+                        <img src="images/two.png" alt="迭代优化图" class="step-image mb-3">
+                        <img src="images/qubo_visualization.png" alt="QUBO可视化示例" class="step-image">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mb-3">
+                <div class="card-header">步骤5：导出结果</div>
+                <div class="card-body">
+                    <ul>
+                        <li>点击"导出结果"按钮导出CSV格式的优化结果</li>
+                        <li>也可下载迭代日志以供分析</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card mb-3">
+                <div class="card-header">步骤6：重置系统</div>
+                <div class="card-body">
+                    <ul>
+                        <li>点击"重置"按钮清除所有数据和设置，准备新的优化任务</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 参数调优建议 -->
+        <div id="tuning" class="section">
+            <h2>4. 参数调优建议</h2>
+            
+            <div class="table-container">
+                <table class="table">
+                    <thead class="table-light">
+                        <tr>
+                            <th>参数</th>
+                            <th>建议设置</th>
+                            <th>说明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>服务半径</td>
+                            <td>0.3-0.8公里</td>
+                            <td>根据实际城市规模和步行距离合理设置</td>
+                        </tr>
+                        <tr>
+                            <td>Alpha值和Beta值</td>
+                            <td>从默认值开始调整</td>
+                            <td>根据实际需求调整两者的相对大小</td>
+                        </tr>
+                        <tr>
+                            <td>批处理大小</td>
+                            <td>5-10</td>
+                            <td>较大的值提高优化质量但增加计算时间</td>
+                        </tr>
+                        <tr>
+                            <td>每批次保留站点数</td>
+                            <td>批处理大小的60%-80%</td>
+                            <td>根据需要保留的站点密度调整</td>
+                        </tr>
+                        <tr>
+                            <td>惩罚尺度</td>
+                            <td>0.0001-0.001</td>
+                            <td>较小的值通常能获得更好的优化结果</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- 注意事项 -->
+        <div id="notes" class="section">
+            <h2>5. 注意事项</h2>
+            
+            <ol>
+                <li>上传的数据文件必须包含所有必需字段，且格式正确</li>
+                <li>参数设置应根据实际需求合理调整，不同参数组合会产生不同优化结果</li>
+                <li>优化过程可能需要一定时间，请耐心等待</li>
+                <li>p值必须始终小于批处理大小，否则无法进行优化</li>
+                <li>地图加载如有问题，请尝试刷新页面或检查网络连接</li>
+            </ol>
+            
+            <div class="alert alert-info">
+                <p>通过合理配置参数和分析优化结果，您可以利用本系统高效地规划公交站点布局，提升公共交通服务水平。</p>
+            </div>
+        </div>
+        
+        <div class="text-center mt-5 pt-3 border-top">
+            <p class="text-muted">公交线网优化系统 © 2025</p>
+        </div>
+    </div>
+    
+    <a href="#" class="back-to-top">↑</a>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 返回顶部按钮
+        window.onscroll = function() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.querySelector('.back-to-top').style.display = "block";
+            } else {
+                document.querySelector('.back-to-top').style.display = "none";
+            }
+        };
+        
+        document.querySelector('.back-to-top').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        });
+    </script>
+</body>
+</html>

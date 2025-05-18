@@ -1,0 +1,231 @@
+/* 增强显示效果的CSS样式 */
+
+/* 滚动动画效果 */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 高亮显示特定元素 */
+.highlight {
+  position: relative;
+  padding: 2px 5px;
+  border-radius: 3px;
+  background-color: rgba(46, 204, 113, 0.2);
+}
+
+.highlight.important {
+  background-color: rgba(231, 76, 60, 0.2);
+  font-weight: 500;
+}
+
+/* 站点移除高亮 - 特别是"下浩"站点 */
+.removed-stop {
+  color: #e74c3c;
+  font-weight: 500;
+}
+
+.stable-removal {
+  color: #8e44ad;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* 表格增强 */
+.result-table th.sortable {
+  cursor: pointer;
+  position: relative;
+}
+
+.result-table th.sortable::after {
+  content: "↕";
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.5;
+}
+
+.result-table th.sortable.asc::after {
+  content: "↑";
+  opacity: 1;
+}
+
+.result-table th.sortable.desc::after {
+  content: "↓";
+  opacity: 1;
+}
+
+/* 可视化标签切换 */
+.viz-tabs {
+  display: flex;
+  border-bottom: 2px solid #e1e1e1;
+  margin-bottom: 1.5rem;
+}
+
+.viz-tab {
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s;
+  font-weight: 500;
+}
+
+.viz-tab:hover {
+  background-color: #f5f5f5;
+}
+
+.viz-tab.active {
+  border-bottom-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.viz-content {
+  display: none;
+}
+
+.viz-content.active {
+  display: block;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* 分析内容增强 */
+.analysis-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.analysis-tab {
+  padding: 0.5rem 1rem;
+  background-color: #f5f5f5;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.analysis-tab:hover {
+  background-color: #e1e1e1;
+}
+
+.analysis-tab.active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* 数据图表效果 */
+.chart-container {
+  position: relative;
+  height: 300px;
+  margin: 2rem 0;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+
+/* 工具提示 */
+.tooltip {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  pointer-events: none;
+  transition: all 0.3s;
+  z-index: 1000;
+  opacity: 0;
+}
+
+.tooltip.visible {
+  opacity: 1;
+}
+
+/* 卡片悬停效果增强 */
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* 按钮脉冲效果 */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(46, 204, 113, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(46, 204, 113, 0);
+  }
+}
+
+.btn-primary:hover {
+  animation: pulse 1.5s infinite;
+}
+
+/* 实验结果强调 */
+.key-finding {
+  background-color: #f9f9f9;
+  border-left: 4px solid var(--primary-color);
+  padding: 1rem;
+  margin: 1.5rem 0;
+}
+
+.key-finding-title {
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+/* 响应式表格 */
+@media (max-width: 768px) {
+  .result-table {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+/* 数学公式块样式 */
+.math-block {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+.math-block .MathJax {
+  font-size: 110% !important;
+}
+
+/* 模型原理部分增强样式 */
+#model .analysis {
+  margin-bottom: 2rem;
+}
+
+#model ul, #model ol {
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+#model li {
+  margin-bottom: 0.5rem;
+}
+
+#model .visualization {
+  margin-top: 3rem;
+} 
